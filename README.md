@@ -1,4 +1,4 @@
-# 🎬 CineMatch
+# CineMatch
 
 Application web qui aide à **choisir un film à regarder**. Elle utilise l'API [TMDB](https://www.themoviedb.org/) (The Movie Database) pour afficher les films, leurs informations et leurs bandes-annonces.
 
