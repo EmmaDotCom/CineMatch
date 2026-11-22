@@ -1,4 +1,4 @@
-.app {
+.page {
   padding: 24px;
 }
 
@@ -9,7 +9,7 @@
   margin-bottom: 32px;
   font: inherit;
   color: var(--text-h);
-  background: var(--code-bg);
+  background: var(--card);
   border: 1px solid var(--border);
   border-radius: 8px;
   box-sizing: border-box;
@@ -21,7 +21,7 @@
 }
 
 .error {
-  color: #d33;
+  color: var(--accent);
 }
 
 .grid {
@@ -51,16 +51,669 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: var(--code-bg);
+  background: var(--card);
 }
 
 .card h3 {
-  margin: 12px 0 4px;
-  font-size: 16px;
-  font-weight: 500;
-  color: var(--text-h);
+  margin: 12px 0 2px;
+  font-size: 21px;
+  line-height: 1.1;
+}
+
+.card img {
+  transition: transform 0.25s, box-shadow 0.25s;
+}
+
+.card a:hover img {
+  transform: translateY(-4px);
+  box-shadow: 0 14px 30px -8px rgba(226, 75, 74, 0.35);
+}
+
+.star {
+  color: var(--rating);
 }
 
 .card p {
   font-size: 14px;
+}
+
+/* ---------- Navbar ---------- */
+.navbar {
+  /* La barre reste en haut quand on fait défiler la page */
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: rgba(15, 15, 18, 0.88);
+  backdrop-filter: blur(10px);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 16px 24px;
+  border-bottom: 1px solid var(--border);
+}
+
+.logo {
+  font-family: var(--heading);
+  font-size: 32px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--text-h);
+}
+
+.logo span,
+.accent {
+  color: var(--accent);
+}
+
+.navbar nav {
+  display: flex;
+  gap: 20px;
+}
+
+.navbar nav a {
+  text-decoration: none;
+  color: var(--text);
+}
+
+/* NavLink ajoute .active au lien de la page en cours */
+.navbar nav a:hover {
+  color: var(--text-h);
+}
+
+.navbar nav a.active {
+  color: var(--text-h);
+  border-bottom: 2px solid var(--accent);
+}
+
+/* ---------- Boutons et cartes ---------- */
+.btn {
+  font-weight: 600;
+  transition: background 0.15s;
+  display: inline-block;
+  margin-top: 24px;
+  padding: 10px 20px;
+  border-radius: 8px;
+  background: var(--accent);
+  color: #fff;
+  text-decoration: none;
+}
+
+.btn:hover {
+  background: var(--accent-hover);
+}
+
+.card a {
+  color: inherit;
+  text-decoration: none;
+}
+
+@media (max-width: 600px) {
+  .navbar {
+    flex-direction: column;
+  }
+}
+
+button.btn {
+  border: none;
+  font: inherit;
+  cursor: pointer;
+}
+
+.muted {
+  color: var(--text);
+  font-size: 15px;
+}
+
+/* ---------- Page détail ---------- */
+.detail {
+  position: relative;
+  text-align: left;
+}
+
+/* Image de fond : un dégradé vers la couleur du fond la fait « fondre » */
+.detail-backdrop {
+  background-color: var(--banner);
+  position: absolute;
+  inset: -24px -24px auto;
+  height: 420px;
+  background-size: cover;
+  background-position: center top;
+  /* Deux dégradés combinés : fondu vers le bas ET sur les côtés */
+  mask-image:
+    linear-gradient(to bottom, #000 40%, transparent),
+    linear-gradient(to right, transparent, #000 15%, #000 85%, transparent);
+  mask-composite: intersect;
+  opacity: 0.45;
+  z-index: 0;
+}
+
+.detail-body {
+  position: relative; /* passe au-dessus de l'image de fond */
+  z-index: 1;
+  display: flex;
+  gap: 32px;
+  padding-top: 160px;
+}
+
+.detail-poster {
+  width: 260px;
+  flex-shrink: 0;
+  align-self: flex-start;
+  border-radius: 8px;
+  box-shadow: var(--shadow);
+}
+
+.detail-info h1 {
+  margin: 8px 0;
+  text-transform: uppercase;
+}
+
+.detail-info h2 {
+  margin-top: 28px;
+}
+
+.detail-meta {
+  color: var(--text-h);
+}
+
+.overview {
+  max-width: 65ch;
+  line-height: 1.6;
+}
+
+.back {
+  background: none;
+  border: none;
+  padding: 0;
+  font: inherit;
+  color: var(--text);
+  cursor: pointer;
+}
+
+.tags {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 0;
+  margin: 16px 0 0;
+}
+
+.tags li {
+  padding: 4px 12px;
+  border: 1px solid var(--text);
+  border-radius: 999px;
+  font-size: 14px;
+}
+
+@media (max-width: 700px) {
+  .detail-body {
+    flex-direction: column;
+    padding-top: 100px;
+  }
+  .detail-poster {
+    width: 160px;
+  }
+}
+
+/* ---------- Fenêtre bande-annonce ---------- */
+.modal {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  background: rgba(0, 0, 0, 0.85);
+}
+
+.modal-content {
+  position: relative;
+  width: min(960px, 100%);
+}
+
+.modal-content iframe {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border: 0;
+  border-radius: 8px;
+}
+
+.modal-close {
+  position: absolute;
+  top: -40px;
+  right: 0;
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+/* ---------- Bouton favori (cœur) ---------- */
+.card {
+  position: relative; /* repère pour placer le cœur sur l'affiche */
+}
+
+.fav-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.6);
+  color: #fff;
+  font-size: 22px;
+  line-height: 1;
+  cursor: pointer;
+  transition: transform 0.15s;
+}
+
+.fav-btn:hover {
+  transform: scale(1.1);
+}
+
+.fav-btn.active {
+  color: var(--accent);
+}
+
+/* Sur une carte : en haut à droite de l'affiche */
+.fav-btn.on-card {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+}
+
+/* Sur la page détail : à côté du bouton bande-annonce */
+.fav-btn.large {
+  width: 46px;
+  height: 46px;
+  border: 1px solid var(--text);
+  background: transparent;
+  color: var(--text-h);
+}
+
+.fav-btn.large.active {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.actions .btn {
+  margin-top: 0;
+}
+
+/* ---------- Catalogue : barre de recherche, tri et filtres ---------- */
+.catalogue {
+  text-align: left;
+}
+
+.catalogue-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.catalogue-toolbar .search {
+  margin-bottom: 0;
+  flex: 1 1 260px;
+}
+
+.sort {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 15px;
+}
+
+.sort select {
+  padding: 10px 12px;
+  font: inherit;
+  color: var(--text-h);
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+
+.filters {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 20px;
+  margin-bottom: 20px;
+  background: var(--card);
+  border-radius: 12px;
+}
+
+.filter-group {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 8px 16px;
+}
+
+.filter-label {
+  width: 70px;
+  flex-shrink: 0;
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-h);
+}
+
+.filter-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  flex: 1;
+}
+
+.tag-btn {
+  padding: 5px 14px;
+  font: inherit;
+  font-size: 14px;
+  color: var(--text);
+  background: transparent;
+  border: 1px solid var(--text);
+  border-radius: 999px;
+  cursor: pointer;
+}
+
+.tag-btn:hover:not(:disabled) {
+  color: var(--text-h);
+  border-color: var(--text-h);
+}
+
+.tag-btn.active {
+  color: #fff;
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+.tag-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.filter-hint {
+  width: 100%;
+  font-size: 13px;
+  color: var(--text);
+}
+
+.reset {
+  align-self: flex-start;
+  padding: 0;
+  font: inherit;
+  font-size: 14px;
+  color: var(--accent);
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.results-count {
+  margin-bottom: 4px;
+}
+
+.grid.is-loading {
+  opacity: 0.4;
+  transition: opacity 0.2s;
+}
+
+.loading {
+  margin-top: 24px;
+  text-align: center;
+}
+
+.load-more {
+  display: block;
+  margin: 32px auto 0;
+}
+
+@media (max-width: 600px) {
+  .filter-label {
+    width: 100%;
+  }
+}
+
+/* ==========================================================
+   Accueil
+   ========================================================== */
+.home {
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+  padding-top: 8px;
+}
+
+.btn-outline {
+  color: var(--text-h);
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(244, 242, 236, 0.4) !important;
+}
+
+.btn-outline:hover {
+  background: rgba(255, 255, 255, 0.14);
+}
+
+/* ---------- Film du jour ---------- */
+.hero {
+  position: relative;
+  min-height: 500px;
+  display: flex;
+  align-items: flex-end;
+  overflow: hidden;
+  border-radius: 16px;
+  background: var(--banner); /* visible tant que l'image charge */
+}
+
+.hero-placeholder {
+  animation: pulse 1.4s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  50% {
+    opacity: 0.6;
+  }
+}
+
+.hero-backdrop {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 20%;
+}
+
+/* Dégradés sombres pour que le texte reste lisible sur l'image */
+.hero::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(to right, rgba(15, 15, 18, 0.95) 0%, rgba(15, 15, 18, 0.6) 45%, transparent 75%),
+    linear-gradient(to top, var(--bg) 0%, transparent 45%);
+}
+
+.hero-content {
+  position: relative;
+  z-index: 1; /* au-dessus des dégradés */
+  max-width: 560px;
+  padding: 40px;
+}
+
+.hero-label {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--rating);
+}
+
+.hero h1 {
+  margin: 8px 0 10px;
+  font-size: 76px;
+  line-height: 0.95;
+}
+
+.hero-meta {
+  color: var(--text-h);
+  font-size: 15px;
+}
+
+/* Le synopsis est coupé après 3 lignes */
+.hero-overview,
+.surprise-overview {
+  margin-top: 14px;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  overflow: hidden;
+  color: var(--text-h);
+  opacity: 0.85;
+}
+
+/* ---------- Surprends-moi ---------- */
+.surprise {
+  display: grid;
+  grid-template-columns: 1fr 1.3fr;
+  gap: 32px;
+  align-items: center;
+  padding: 32px;
+  background: var(--card);
+  border-radius: 16px;
+}
+
+.surprise h2 {
+  font-size: 40px;
+}
+
+.surprise-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.surprise-form select {
+  flex: 1 1 180px;
+  padding: 10px 12px;
+  font: inherit;
+  color: var(--text-h);
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+
+.surprise-form .btn {
+  margin-top: 0;
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
+
+.surprise-result {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+  transition: opacity 0.2s;
+}
+
+.surprise-result.is-loading {
+  opacity: 0.4;
+}
+
+.surprise-result img {
+  width: 130px;
+  flex-shrink: 0;
+  border-radius: 8px;
+  box-shadow: var(--shadow);
+}
+
+.surprise-result h3 {
+  margin: 0 0 4px;
+  font-size: 30px;
+  line-height: 1;
+}
+
+.surprise-result .actions {
+  margin-top: 16px;
+}
+
+/* ---------- Rangées de films ---------- */
+.row-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.see-all {
+  font-size: 15px;
+  color: var(--text);
+  text-decoration: none;
+}
+
+.see-all:hover {
+  color: var(--accent);
+}
+
+/* Défilement horizontal, avec « aimantation » sur chaque carte */
+.row {
+  list-style: none;
+  margin: 8px 0 0;
+  padding: 0 0 12px;
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 170px;
+  gap: 20px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
+}
+
+.row .card {
+  scroll-snap-align: start;
+}
+
+@media (max-width: 800px) {
+  .hero {
+    min-height: 440px;
+  }
+  .hero-content {
+    padding: 24px;
+  }
+  .hero h1 {
+    font-size: 52px;
+  }
+  .surprise {
+    grid-template-columns: 1fr;
+    padding: 24px;
+  }
+  .row {
+    grid-auto-columns: 140px;
+    gap: 14px;
+  }
 }
