@@ -77,9 +77,7 @@
   font-size: 14px;
 }
 
-/* ---------- Navbar ---------- */
 .navbar {
-  /* La barre reste en haut quand on fait défiler la page */
   position: sticky;
   top: 0;
   z-index: 50;
@@ -117,7 +115,6 @@
   color: var(--text);
 }
 
-/* NavLink ajoute .active au lien de la page en cours */
 .navbar nav a:hover {
   color: var(--text-h);
 }
@@ -127,7 +124,6 @@
   border-bottom: 2px solid var(--accent);
 }
 
-/* ---------- Boutons et cartes ---------- */
 .btn {
   font-weight: 600;
   transition: background 0.15s;
@@ -166,13 +162,11 @@ button.btn {
   font-size: 15px;
 }
 
-/* ---------- Page détail ---------- */
 .detail {
   position: relative;
   text-align: left;
 }
 
-/* Image de fond : un dégradé vers la couleur du fond la fait « fondre » */
 .detail-backdrop {
   background-color: var(--banner);
   position: absolute;
@@ -180,7 +174,7 @@ button.btn {
   height: 420px;
   background-size: cover;
   background-position: center top;
-  /* Deux dégradés combinés : fondu vers le bas ET sur les côtés */
+
   mask-image:
     linear-gradient(to bottom, #000 40%, transparent),
     linear-gradient(to right, transparent, #000 15%, #000 85%, transparent);
@@ -190,7 +184,7 @@ button.btn {
 }
 
 .detail-body {
-  position: relative; /* passe au-dessus de l'image de fond */
+  position: relative;
   z-index: 1;
   display: flex;
   gap: 32px;
@@ -258,7 +252,6 @@ button.btn {
   }
 }
 
-/* ---------- Fenêtre bande-annonce ---------- */
 .modal {
   position: fixed;
   inset: 0;
@@ -294,9 +287,8 @@ button.btn {
   cursor: pointer;
 }
 
-/* ---------- Bouton favori (cœur) ---------- */
 .card {
-  position: relative; /* repère pour placer le cœur sur l'affiche */
+  position: relative;
 }
 
 .fav-btn {
@@ -324,14 +316,12 @@ button.btn {
   color: var(--accent);
 }
 
-/* Sur une carte : en haut à droite de l'affiche */
 .fav-btn.on-card {
   position: absolute;
   top: 8px;
   right: 8px;
 }
 
-/* Sur la page détail : à côté du bouton bande-annonce */
 .fav-btn.large {
   width: 46px;
   height: 46px;
@@ -356,7 +346,6 @@ button.btn {
   margin-top: 0;
 }
 
-/* ---------- Catalogue : barre de recherche, tri et filtres ---------- */
 .catalogue {
   text-align: left;
 }
@@ -493,9 +482,6 @@ button.btn {
   }
 }
 
-/* ==========================================================
-   Accueil
-   ========================================================== */
 .home {
   display: flex;
   flex-direction: column;
@@ -513,7 +499,6 @@ button.btn {
   background: rgba(255, 255, 255, 0.14);
 }
 
-/* ---------- Film du jour ---------- */
 .hero {
   position: relative;
   min-height: 500px;
@@ -521,7 +506,7 @@ button.btn {
   align-items: flex-end;
   overflow: hidden;
   border-radius: 16px;
-  background: var(--banner); /* visible tant que l'image charge */
+  background: var(--banner);
 }
 
 .hero-placeholder {
@@ -543,7 +528,6 @@ button.btn {
   object-position: center 20%;
 }
 
-/* Dégradés sombres pour que le texte reste lisible sur l'image */
 .hero::after {
   content: '';
   position: absolute;
@@ -555,7 +539,7 @@ button.btn {
 
 .hero-content {
   position: relative;
-  z-index: 1; /* au-dessus des dégradés */
+  z-index: 1;
   max-width: 560px;
   padding: 40px;
 }
@@ -579,7 +563,6 @@ button.btn {
   font-size: 15px;
 }
 
-/* Le synopsis est coupé après 3 lignes */
 .hero-overview,
 .surprise-overview {
   margin-top: 14px;
@@ -592,7 +575,6 @@ button.btn {
   opacity: 0.85;
 }
 
-/* ---------- Surprends-moi ---------- */
 .surprise {
   display: grid;
   grid-template-columns: 1fr 1.3fr;
@@ -661,7 +643,6 @@ button.btn {
   margin-top: 16px;
 }
 
-/* ---------- Rangées de films ---------- */
 .row-header {
   display: flex;
   align-items: baseline;
@@ -679,7 +660,6 @@ button.btn {
   color: var(--accent);
 }
 
-/* Défilement horizontal, avec « aimantation » sur chaque carte */
 .row {
   list-style: none;
   margin: 8px 0 0;
@@ -718,9 +698,6 @@ button.btn {
   }
 }
 
-/* ==========================================================
-   Connexion
-   ========================================================== */
 .auth {
   display: flex;
   justify-content: center;

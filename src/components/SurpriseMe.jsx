@@ -3,10 +3,8 @@ import { Link } from 'react-router-dom'
 import { discoverMovies, getGenres, IMG_URL } from '../api/tmdb'
 import FavoriteButton from './FavoriteButton'
 
-// Nombre entier au hasard entre 1 et max (inclus)
 const randomInt = (max) => Math.floor(Math.random() * max) + 1
 
-// Bloc « Surprends-moi » : tire un bon film au hasard, dans le genre choisi.
 function SurpriseMe() {
   const [genres, setGenres] = useState([])
   const [genre, setGenre] = useState('')
@@ -26,20 +24,18 @@ function SurpriseMe() {
     setLoading(true)
     setError(null)
     try {
-      // Seulement des films connus et bien notés, pour que la surprise soit bonne
       const params = {
         sort_by: 'popularity.desc',
         'vote_count.gte': 300,
         'vote_average.gte': 6.5,
         ...(genre && { with_genres: genre }),
       }
-      // 1er appel : combien de pages existe-t-il pour ce genre ?
+
       const first = await discoverMovies({ ...params, page: 1 })
-      // 2e appel : une page au hasard parmi les 20 premières (les films les plus connus)
+
       const page = randomInt(Math.min(first.total_pages, 20))
       const data = page === 1 ? first : await discoverMovies({ ...params, page })
 
-      // On évite de retomber sur le même film deux fois de suite
       const choices = data.results.filter((m) => m.id !== movie?.id)
       if (choices.length === 0) throw new Error('Aucun film trouvé pour ce genre.')
       setMovie(choices[randomInt(choices.length) - 1])
@@ -76,8 +72,6 @@ function SurpriseMe() {
         </div>
         {error && <p className="error">{error}</p>}
       </div>
-
-      {/* Le film tiré au sort */}
       {movie && (
         <div className={`surprise-result ${loading ? 'is-loading' : ''}`}>
           {movie.poster_path && (

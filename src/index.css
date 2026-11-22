@@ -1,28 +1,22 @@
-/* ==========================================================
-   Thème CineMatch : sombre, ambiance salle de cinéma.
-   Toutes les couleurs sont définies ici, une seule fois.
-   Pour changer la palette, il suffit de modifier ces lignes.
-   ========================================================== */
 :root {
-  --bg: #0f0f12; /* fond de toutes les pages */
-  --card: #1c1c21; /* blocs, champs, panneau de filtres */
-  --banner: #2a1414; /* fond du bandeau si un film n'a pas d'image */
-  --text-h: #f4f2ec; /* texte principal, titres */
-  --text: #9a988f; /* texte secondaire, liens inactifs, contours des tags */
-  --accent: #e24b4a; /* boutons, tags actifs, cœur, mots-clés */
+  --bg: #0f0f12;
+  --card: #1c1c21;
+  --banner: #2a1414;
+  --text-h: #f4f2ec;
+  --text: #9a988f;
+  --accent: #e24b4a;
   --accent-hover: #c93d3c;
-  --rating: #ef9f27; /* étoiles et « Film du jour » */
-  --border: #2a2a31; /* séparateurs */
+  --rating: #ef9f27;
+  --border: #2a2a31;
   --shadow: rgba(0, 0, 0, 0.5) 0 10px 24px -6px;
 
-  /* Titres : police condensée, en majuscules */
   --heading: 'Bebas Neue', 'Oswald', Impact, sans-serif;
   --sans: 'Inter', system-ui, 'Segoe UI', Roboto, sans-serif;
 
   font: 17px/150% var(--sans);
   color: var(--text);
   background: var(--bg);
-  color-scheme: dark; /* barres de défilement et champs en version sombre */
+  color-scheme: dark;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -52,7 +46,7 @@ h1,
 h2,
 h3 {
   font-family: var(--heading);
-  font-weight: 400; /* Bebas Neue n'existe qu'en une graisse, déjà épaisse */
+  font-weight: 400;
   text-transform: uppercase;
   letter-spacing: 0.03em;
   color: var(--text-h);
@@ -85,7 +79,6 @@ a {
   color: var(--text-h);
 }
 
-/* Contour visible au clavier, dans la couleur d'accent */
 :focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 2px;

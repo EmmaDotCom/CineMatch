@@ -2,7 +2,6 @@ import { useState } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/useAuth'
 
-// Vérifie le formulaire et renvoie les erreurs trouvées (objet vide = tout est bon)
 function validate({ email, password }) {
   const errors = {}
   if (!email.trim()) errors.email = 'L’email est obligatoire.'
@@ -18,7 +17,6 @@ function Connexion() {
   const navigate = useNavigate()
   const location = useLocation()
 
-  // Un « formulaire contrôlé » : React garde la valeur de chaque champ dans l'état
   const [form, setForm] = useState({ email: '', password: '' })
   const [errors, setErrors] = useState({})
   const [showPassword, setShowPassword] = useState(false)
@@ -26,22 +24,21 @@ function Connexion() {
   const handleChange = (e) => {
     const { name, value } = e.target
     setForm((f) => ({ ...f, [name]: value }))
-    // On efface l'erreur du champ dès qu'on le corrige
+
     setErrors((errs) => ({ ...errs, [name]: undefined }))
   }
 
   const handleSubmit = (e) => {
-    e.preventDefault() // empêche le rechargement de la page
+    e.preventDefault()
     const found = validate(form)
     setErrors(found)
     if (Object.keys(found).length > 0) return
 
     login(form.email.trim())
-    // Retour à la page d'où l'on venait (ou l'accueil)
+
     navigate(location.state?.from ?? '/', { replace: true })
   }
 
-  // Déjà connecté : on propose de se déconnecter
   if (user) {
     return (
       <section className="auth">
@@ -65,13 +62,11 @@ function Connexion() {
 
   return (
     <section className="auth">
-      {/* noValidate : on utilise nos propres messages d'erreur, en français */}
       <form className="auth-card" onSubmit={handleSubmit} noValidate>
         <h1>
           <span className="accent">Connexion</span>
         </h1>
         <p className="muted">Connecte-toi pour retrouver tes films préférés.</p>
-
         <label className="field">
           Email
           <input
@@ -85,7 +80,6 @@ function Connexion() {
           />
           {errors.email && <span className="field-error">{errors.email}</span>}
         </label>
-
         <label className="field">
           Mot de passe
           <div className="password">
@@ -107,7 +101,6 @@ function Connexion() {
           </div>
           {errors.password && <span className="field-error">{errors.password}</span>}
         </label>
-
         <button type="submit" className="btn auth-submit">
           Se connecter
         </button>
