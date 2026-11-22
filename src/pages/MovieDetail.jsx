@@ -5,8 +5,6 @@ import TrailerModal from '../components/TrailerModal'
 import FavoriteButton from '../components/FavoriteButton'
 import { findTrailer, formatRuntime } from '../utils/movie'
 
-// Lit le ":id" de l'URL /film/:id. Le key={id} recrée MovieDetailContent
-// à chaque nouveau film : son état (film, erreur, fenêtre) repart de zéro.
 function MovieDetail() {
   const { id } = useParams()
   return <MovieDetailContent key={id} id={id} />
@@ -18,7 +16,6 @@ function MovieDetailContent({ id }) {
   const [error, setError] = useState(null)
   const [showTrailer, setShowTrailer] = useState(false)
 
-  // On charge le film depuis TMDB à l'affichage de la page
   useEffect(() => {
     const controller = new AbortController()
     getMovie(id, controller.signal)
@@ -32,7 +29,6 @@ function MovieDetailContent({ id }) {
 
   if (error) return <p className="error">{error}</p>
   if (!movie) return <p>Chargement…</p>
-
   const trailer = findTrailer(movie.videos?.results)
   const cast = movie.credits?.cast?.slice(0, 6) ?? []
   const infos = [
@@ -42,7 +38,6 @@ function MovieDetailContent({ id }) {
 
   return (
     <article className="detail">
-      {/* Grande image de fond, fondue dans la page grâce à un dégradé en CSS */}
       {movie.backdrop_path && (
         <div
           className="detail-backdrop"
@@ -69,18 +64,15 @@ function MovieDetailContent({ id }) {
               </>
             )}
           </p>
-
           <ul className="tags">
             {movie.genres.map((g) => (
               <li key={g.id}>{g.name}</li>
             ))}
           </ul>
-
           <h2>Synopsis</h2>
           <p className="overview">
             {movie.overview || 'Aucun synopsis disponible pour ce film.'}
           </p>
-
           <div className="actions">
             {trailer ? (
               <button className="btn" onClick={() => setShowTrailer(true)}>
@@ -91,7 +83,6 @@ function MovieDetailContent({ id }) {
             )}
             <FavoriteButton movie={movie} className="large" />
           </div>
-
           {cast.length > 0 && (
             <>
               <h2>Casting</h2>
@@ -102,8 +93,6 @@ function MovieDetailContent({ id }) {
           )}
         </div>
       </div>
-
-      {/* La fenêtre n'existe dans la page que si showTrailer vaut true */}
       {showTrailer && (
         <TrailerModal
           videoKey={trailer.key}

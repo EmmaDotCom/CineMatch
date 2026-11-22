@@ -1,9 +1,6 @@
 import { useEffect } from 'react'
 
-// Fenêtre qui affiche la bande-annonce YouTube par-dessus la page.
-// Props : videoKey (identifiant YouTube) et onClose (fonction pour fermer).
 function TrailerModal({ videoKey, title, onClose }) {
-  // Fermer avec la touche Échap
   useEffect(() => {
     const onKey = (e) => e.key === 'Escape' && onClose()
     window.addEventListener('keydown', onKey)
@@ -11,9 +8,7 @@ function TrailerModal({ videoKey, title, onClose }) {
   }, [onClose])
 
   return (
-    // Un clic sur le fond sombre ferme la fenêtre…
     <div className="modal" onClick={onClose}>
-      {/* …mais pas un clic sur la vidéo elle-même */}
       <div className="modal-content" onClick={(e) => e.stopPropagation()}>
         <button className="modal-close" onClick={onClose} aria-label="Fermer">
           ✕

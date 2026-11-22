@@ -1,9 +1,6 @@
 import { Link } from 'react-router-dom'
 import MovieCard from './MovieCard'
 
-// Rangée de films qui défile horizontalement.
-// "title" peut contenir du JSX (pour colorer un mot-clé),
-// "link" (optionnel) ajoute un lien « Tout voir » vers le catalogue.
 function MovieRow({ title, movies, link }) {
   if (movies.length === 0) return null
 

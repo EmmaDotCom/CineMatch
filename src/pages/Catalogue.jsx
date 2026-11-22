@@ -13,13 +13,11 @@ import {
 
 const FILTER_KEYS = ['tri', 'genre', 'annee', 'duree', 'note']
 
-// Évite les doublons quand on ajoute une page de résultats à la suite
 function withoutDuplicates(movies) {
   const seen = new Set()
   return movies.filter((m) => !seen.has(m.id) && seen.add(m.id))
 }
 
-// Une rangée de tags cliquables. Recliquer sur le tag actif le désélectionne.
 function FilterGroup({ label, options, value, onToggle, disabled, hint }) {
   return (
     <div className="filter-group">
@@ -44,15 +42,11 @@ function FilterGroup({ label, options, value, onToggle, disabled, hint }) {
 }
 
 function Catalogue() {
-  // Les filtres sont rangés dans l'URL (?genre=28&note=7…). Avantages :
-  // en revenant d'une page détail, on retrouve ses filtres, et on peut partager le lien.
   const [params, setParams] = useSearchParams()
   const term = (params.get('q') ?? '').trim()
   const filters = Object.fromEntries(FILTER_KEYS.map((k) => [k, params.get(k) ?? '']))
   const isSearch = term !== ''
 
-  // Ce qu'on demande à TMDB, résumé en une chaîne : quand elle change, on recharge.
-  // En mode recherche, seuls les mots tapés comptent (les filtres sont appliqués ensuite).
   const requestKey = JSON.stringify(
     isSearch ? { term } : { discover: buildDiscoverParams(filters) },
   )
@@ -61,24 +55,21 @@ function Catalogue() {
   const [data, setData] = useState({ key: null, page: 0, items: [], total: 0, totalPages: 0 })
   const [error, setError] = useState(null)
   const [pageState, setPageState] = useState({ key: requestKey, page: 1 })
-  // Nouvelle requête → on repart automatiquement de la page 1
+
   const page = pageState.key === requestKey ? pageState.page : 1
 
-  // Liste des genres (une seule fois)
   useEffect(() => {
     const controller = new AbortController()
     getGenres(controller.signal)
       .then((d) => setGenres(d.genres))
-      .catch(() => {}) // sans genres, la rangée ne s'affiche simplement pas
+      .catch(() => {})
     return () => controller.abort()
   }, [])
 
-  // Chargement des films
   useEffect(() => {
     const request = JSON.parse(requestKey)
     const controller = new AbortController()
 
-    // Délai de 400 ms en recherche, pour ne pas appeler l'API à chaque frappe
     const timer = setTimeout(
       () => {
         const call = request.term
@@ -92,7 +83,7 @@ function Catalogue() {
               page,
               items: page === 1 ? res.results : withoutDuplicates([...prev.items, ...res.results]),
               total: res.total_results,
-              totalPages: Math.min(res.total_pages, 500), // TMDB s'arrête à 500 pages
+              totalPages: Math.min(res.total_pages, 500),
             })),
           )
           .catch((err) => {
@@ -108,7 +99,6 @@ function Catalogue() {
     }
   }, [requestKey, page])
 
-  // Modifie un paramètre de l'URL (valeur vide = on l'enlève)
   const setParam = (key, value) => {
     setParams(
       (prev) => {
@@ -133,7 +123,6 @@ function Catalogue() {
   return (
     <section className="catalogue">
       <h1>Catalogue</h1>
-
       <div className="catalogue-toolbar">
         <input
           className="search"
@@ -156,7 +145,6 @@ function Catalogue() {
           </select>
         </label>
       </div>
-
       <div className="filters">
         {genres.length > 0 && (
           <FilterGroup
@@ -176,36 +164,31 @@ function Catalogue() {
           hint={isSearch ? 'Le filtre de durée n’est pas disponible pendant une recherche par titre.' : null}
         />
         <FilterGroup label="Note" options={RATINGS} value={filters.note} onToggle={toggle('note')} />
-
         {hasFilters && (
           <button type="button" className="reset" onClick={resetFilters}>
             ✕ Réinitialiser les filtres
           </button>
         )}
       </div>
-
       <p className="muted results-count">
         {isSearch
           ? `Résultats pour « ${term} »`
           : isUpToDate &&
-            // Au-delà de 10 000, TMDB renvoie un total approximatif
+
             (data.total > 10000
               ? 'Plus de 10 000 films'
               : `${data.total.toLocaleString('fr-FR')} film${data.total > 1 ? 's' : ''}`)}
       </p>
-
       {currentError && <p className="error">{currentError}</p>}
       {!loading && !currentError && movies.length === 0 && (
         <p>Aucun film ne correspond à ces critères.</p>
       )}
 
-      {/* Pendant le chargement, on garde les anciens films en transparence */}
       <ul className={`grid ${loading ? 'is-loading' : ''}`}>
         {movies.map((m) => (
           <MovieCard key={m.id} movie={m} />
         ))}
       </ul>
-
       {loading && <p className="loading">Chargement…</p>}
       {!loading && hasMore && (
         <button

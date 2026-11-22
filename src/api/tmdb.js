@@ -26,8 +26,6 @@ export const getPopularMovies = (page = 1, signal) =>
 export const searchMovies = (query, page = 1, signal) =>
   request('/search/movie', { query, page }, signal)
 
-// include_video_language : beaucoup de films n'ont pas de bande-annonce en
-// français, on accepte donc aussi l'anglais et les vidéos sans langue.
 export const getMovie = (id, signal) =>
   request(
     `/movie/${id}`,
@@ -40,10 +38,8 @@ export const getGenres = (signal) => request('/genre/movie/list', {}, signal)
 export const discoverMovies = (params = {}, signal) =>
   request('/discover/movie', params, signal)
 
-// Films les plus vus du moment ('day' ou 'week')
 export const getTrending = (timeWindow = 'week', signal) =>
   request(`/trending/movie/${timeWindow}`, {}, signal)
 
-// Films les mieux notés de tous les temps
 export const getTopRated = (page = 1, signal) =>
   request('/movie/top_rated', { page }, signal)

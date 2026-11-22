@@ -1,6 +1,5 @@
 import { useFavorites } from '../context/useFavorites'
 
-// Bouton cœur réutilisable (cartes et page détail).
 function FavoriteButton({ movie, className = '' }) {
   const { isFavorite, toggleFavorite } = useFavorites()
   const active = isFavorite(movie.id)

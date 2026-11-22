@@ -5,9 +5,6 @@ import { findTrailer, formatRuntime } from '../utils/movie'
 import TrailerModal from './TrailerModal'
 import FavoriteButton from './FavoriteButton'
 
-// Grand bandeau « Film du jour ».
-// Reçoit un film de la liste des tendances, puis charge ses détails
-// (durée, genres, vidéos) pour pouvoir proposer la bande-annonce.
 function FeaturedMovie({ movie }) {
   const [details, setDetails] = useState(null)
   const [showTrailer, setShowTrailer] = useState(false)
@@ -16,7 +13,7 @@ function FeaturedMovie({ movie }) {
     const controller = new AbortController()
     getMovie(movie.id, controller.signal)
       .then(setDetails)
-      .catch(() => {}) // sans détails, le bandeau s'affiche quand même
+      .catch(() => {})
     return () => controller.abort()
   }, [movie.id])
 
@@ -35,7 +32,6 @@ function FeaturedMovie({ movie }) {
         alt=""
         aria-hidden="true"
       />
-
       <div className="hero-content">
         <p className="hero-label">★ Film du jour</p>
         <h1>{movie.title}</h1>
@@ -44,7 +40,6 @@ function FeaturedMovie({ movie }) {
           {infos.length > 0 && ` · ${infos.join(' · ')}`}
         </p>
         <p className="hero-overview">{movie.overview}</p>
-
         <div className="actions">
           <Link to={`/film/${movie.id}`} className="btn">
             Voir le film
@@ -54,11 +49,9 @@ function FeaturedMovie({ movie }) {
               ▶ Bande-annonce
             </button>
           )}
-          {/* Même bouton cœur que sur les cartes et la page détail */}
           <FavoriteButton movie={movie} className="large" />
         </div>
       </div>
-
       {showTrailer && (
         <TrailerModal
           videoKey={trailer.key}
