@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import { IMG_URL } from '../api/tmdb'
+import FavoriteButton from './FavoriteButton'
 
 // Carte réutilisable : catalogue, favoris, rangées de l'accueil, films similaires.
 // Elle reçoit un objet film de TMDB via la prop "movie".
@@ -19,9 +20,10 @@ function MovieCard({ movie }) {
         <h3>{movie.title}</h3>
       </Link>
       <p>
-        {year} · ⭐ {note}
+        {year} · <span className="star">★</span> {note}
       </p>
-      {/* Le bouton cœur arrivera à l'étape suivante (favoris) */}
+      {/* En dehors du Link : cliquer sur le cœur n'ouvre pas la page du film */}
+      <FavoriteButton movie={movie} className="on-card" />
     </li>
   )
 }

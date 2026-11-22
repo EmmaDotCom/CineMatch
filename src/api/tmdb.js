@@ -39,3 +39,11 @@ export const getGenres = (signal) => request('/genre/movie/list', {}, signal)
 
 export const discoverMovies = (params = {}, signal) =>
   request('/discover/movie', params, signal)
+
+// Films les plus vus du moment ('day' ou 'week')
+export const getTrending = (timeWindow = 'week', signal) =>
+  request(`/trending/movie/${timeWindow}`, {}, signal)
+
+// Films les mieux notés de tous les temps
+export const getTopRated = (page = 1, signal) =>
+  request('/movie/top_rated', { page }, signal)
